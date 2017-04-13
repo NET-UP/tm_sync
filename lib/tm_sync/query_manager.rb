@@ -1,3 +1,4 @@
+require 'digest/sha2'
 module TmSync
 
   module QueryManager
@@ -9,18 +10,21 @@ module TmSync
 
     def convert(type, &block)
       @response_types ||= Hash.new{|hash, key| hash[key] = ->object{Hash.new}}
-      @response_types[type] = block
+      type.each do |t_source, t_type|
+        @response_types[t_source] = [t_type, block]
+      end
     end
 
     def convert_obj(object)
       object.class.ancestors.each do |ancestor|
         next if not @response_types.has_key? ancestor
-        return @response_types[ancestor].(object)
+        type, func = @response_types[ancestor]
+        return [type, func.(object)]
       end
     end
 
     def query(command, response)
-      result = @types[command.type].(command.query)
+      result = @query_types[command.type].(command.query)
       if result.nil?
         return [] if response.nil?
         response.response_code = 415
@@ -29,7 +33,15 @@ module TmSync
         return
       end
 
-      result.map &method(:convert_obj)
+      result.map &method(:convert_obj).map do |type, result|
+        {
+            mode: :create,
+            type: type,
+            identifier: result[:identifier],
+            checksum: Digest::Sha512.hexdigest(data.to_json.encode('utf-8')),
+            object: result
+        }
+      end
     end
 
   end

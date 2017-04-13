@@ -18,6 +18,10 @@ module TmSync
       request_handler :subscribe
       request_handler :unsubscribe
 
+      ##
+      # Catch All request handler
+      request_handler :sync
+
       protected
       def client
 
