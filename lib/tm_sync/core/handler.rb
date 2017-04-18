@@ -10,7 +10,7 @@ module TmSync
     attr_reader :base_uri
     attr_accessor :connection_manager
 
-    def new(base_uri)
+    def initialize(base_uri)
       @base_uri = base_uri
     end
 
