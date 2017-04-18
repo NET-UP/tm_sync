@@ -1,5 +1,5 @@
 module TmSync
-  VERSION = "0.1.0.1"
+  VERSION = "0.1.0.2"
 
   PROTOCOL_VERSION = 1
   SUPPORTED_PROTOCOL_FLAGS = []
