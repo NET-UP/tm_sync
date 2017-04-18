@@ -149,7 +149,6 @@ module TmSync
     end
 
     def receive(request)
-      Rails.logger.info("LOG stuff")
       response = TmSync::Response.new
       response.request = request
       response.payload = {}
@@ -192,7 +191,7 @@ module TmSync
       raise e
 
     # Make sure the server ensures the response is sent
-    ensure
+    else
       response.send!
     end
 
