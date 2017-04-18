@@ -4,7 +4,7 @@ module TmSync
 
     def self.inherited(klass)
       klass.extend ClassMethods
-      klass.instance_eval do
+      klass.singleton_class.instance_eval do
         alias_method :original_new, :new
 
         def new(*args, &block)
