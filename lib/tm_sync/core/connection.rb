@@ -189,7 +189,7 @@ module TmSync
         response.error = 'Internal Server Error'
       end
 
-      # raise e
+      raise e
 
     # Make sure the server ensures the response is sent
     ensure
