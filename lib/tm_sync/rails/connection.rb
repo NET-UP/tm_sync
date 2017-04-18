@@ -56,11 +56,11 @@ module TmSync
       else
         has_one :outbound_connection,
                 ->{where outbound: true},
-                :source => :channel
+                :foreign_type => :channel
 
         has_one :inbound_connection,
                 ->{where outbound: false},
-                :source => :channel
+                :foreign_type => :channel
 
         lazy_alias_method :state, :connection_state
       end
