@@ -6,6 +6,10 @@ module TmSync
       klass.extend ClassMethods
       klass.instance_eval do
         alias_method :original_new, :new
+
+        def new(*args, &block)
+          raise RuntimeError.new('Cannot instantiate new enum values')
+        end
       end
     end
 
@@ -20,9 +24,6 @@ module TmSync
         const_set(name, val)
       end
 
-      def new
-        raise RuntimeError.new('Cannot instantiate new enum values')
-      end
 
     end
 
