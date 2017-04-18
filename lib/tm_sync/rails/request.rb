@@ -13,6 +13,7 @@ module TmSync
       end
 
       def respond!(response)
+        raise RuntimeError.new
         controller.render :json => response,
                           :code => response.response_code
       end
