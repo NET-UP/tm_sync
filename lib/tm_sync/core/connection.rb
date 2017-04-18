@@ -1,10 +1,9 @@
 require 'tm_sync/exceptions'
-require 'tm_sync/enum'
+require 'tm_sync/utils'
 
 module TmSync
 
   class ConnectionState < Enum
-    #     STATE_NAME    SEND/RECEIVE REQUESTS?
     value :INITIALIZED, true
     value :OPEN,        true
     value :BROKEN,      false
