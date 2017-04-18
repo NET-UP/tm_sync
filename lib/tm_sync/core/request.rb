@@ -1,9 +1,13 @@
 require 'tm_sync/core/http'
 require 'tm_sync/core/response'
 
+require 'tm_sync/utils'
+
 module TmSync
 
   class Request
+    include JSONAble
+
     attr_accessor :token, :sequence_number, :command
     attr_accessor :connection
 
@@ -14,10 +18,6 @@ module TmSync
           :sequence_number => sequence_number,
           :payload => command.to_h
       }
-    end
-
-    def to_json(*args)
-      to_h.to_json(*args)
     end
 
     def send!
