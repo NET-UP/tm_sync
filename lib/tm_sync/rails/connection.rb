@@ -43,17 +43,29 @@ module TmSync
       if respond_to? :attr_accessible
         attr_accessible :connection_state
         attr_accessible :endpoint
+
+        has_one :outbound_connection,
+                :conditions => ['channel.outbound', true],
+                :source => :channel
+
+        has_one :inbound_connection,
+                :conditions => ['channel.outbound', false],
+                :source => :channel
+
+        alias_method :state, :connection_state
+      else
+        has_one :outbound_connection,
+                ->{where outbound: true},
+                :source => :channel
+
+        has_one :inbound_connection,
+                ->{where outbound: false},
+                :source => :channel
+
+        lazy_alias_method :state, :connection_state
       end
 
-      has_one :outbound_connection,
-              :conditions => ['channel.outbound = ?', true],
-              :source => :channel
 
-      has_one :inbound_connection,
-              :conditions => ['channel.outbound = ?', false],
-              :source => :channel
-
-      alias_method :state, :connection_state
 
       def state=(value)
         self.connection_state = value
