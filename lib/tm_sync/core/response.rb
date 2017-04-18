@@ -23,8 +23,8 @@ module TmSync
       result
     end
 
-    def to_json
-      to_h.to_json
+    def to_json(*args)
+      to_h.to_json(*args)
     end
 
     def [](value)
