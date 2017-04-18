@@ -9,6 +9,31 @@ module TmSync
     end
 
     class << self
+      module ClassMethods
+
+        def payload(*payloads)
+          payloads.each do |payload|
+            if not payload.is_a? Hash
+              define_method payload do
+                self.payload[payload.to_s]
+              end
+
+              define_method :"#{payload}=" do |value|
+                self.ppayload[payload.to_s] = value
+              end
+            else
+              payload.each do |p_method_name, p_payload_name|
+                define_method p_method_name do
+                  self.payloads[p_payload_name.to_s]
+                end
+                define_method :"#{p_method_name}=" do |value|
+                  self.payloads[p_payload_name.to_s] = value
+                end
+              end
+            end
+          end
+        end
+      end
       extend ClassMethods
 
       def [](name)
@@ -35,31 +60,6 @@ module TmSync
         klass.extend ClassMethods
       end
 
-      module ClassMethods
-
-        def payload(*payloads)
-          payloads.each do |payload|
-            if not payload.is_a? Hash
-              define_method payload do
-                self.payload[payload.to_s]
-              end
-
-              define_method :"#{payload}=" do |value|
-                self.ppayload[payload.to_s] = value
-              end
-            else
-              payload.each do |p_method_name, p_payload_name|
-                define_method p_method_name do
-                  self.payloads[p_payload_name.to_s]
-                end
-                define_method :"#{p_method_name}=" do |value|
-                  self.payloads[p_payload_name.to_s] = value
-                end
-              end
-            end
-          end
-        end
-      end
     end
 
   end
