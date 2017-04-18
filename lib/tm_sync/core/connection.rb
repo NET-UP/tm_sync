@@ -4,14 +4,15 @@ require 'tm_sync/utils'
 module TmSync
 
   class ConnectionState < Enum
-    value :INITIALIZED, true
-    value :OPEN,        true
-    value :BROKEN,      false
-    value :CLOSED,      false
 
     def initialize(sendable)
       self.sendable = sendable
     end
+
+    value :INITIALIZED, true
+    value :OPEN,        true
+    value :BROKEN,      false
+    value :CLOSED,      false
 
     attr_accessor :sendable
     private :sendable=
