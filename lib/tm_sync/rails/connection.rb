@@ -5,9 +5,11 @@ module TmSync
     class Channel < ActiveRecord::Base
       include TmSync::HalfDuplexConnection
 
-      attr_accessible :token
-      attr_accessible :sequence_number
-      attr_accessible :outbound
+      if respond_to? :attr_accessible
+        attr_accessible :token
+        attr_accessible :sequence_number
+        attr_accessible :outbound
+      end
 
       has_one :connection
 
@@ -31,8 +33,10 @@ module TmSync
     class Connection < ActiveRecord::Base
       include TmSync::Connection
 
-      attr_accessible :connection_state
-      attr_accessible :endpoint
+      if respond_to? :attr_accessible
+        attr_accessible :connection_state
+        attr_accessible :endpoint
+      end
 
       has_one :outbound_connection,
               :conditions => ['channel.outbound = ?', true],
