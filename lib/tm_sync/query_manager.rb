@@ -33,7 +33,7 @@ module TmSync
         return
       end
 
-      result.map &method(:convert_obj).map do |type, result|
+      result.map(&method(:convert_obj)).map do |type, result|
         {
             mode: :create,
             type: type,
