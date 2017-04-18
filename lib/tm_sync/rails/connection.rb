@@ -1,14 +1,21 @@
+require 'tm_sync/utils'
+
 module TmSync
 
   module Rails
 
     class Channel < ActiveRecord::Base
       include TmSync::HalfDuplexConnection
+      include LazyAliasMethod
 
       if respond_to? :attr_accessible
         attr_accessible :token
         attr_accessible :sequence_number
         attr_accessible :outbound
+
+        alias_method :is_sending?, :outbound
+      else
+        lazy_alias_method :is_sending?, :outbound
       end
 
       has_one :connection
@@ -16,7 +23,6 @@ module TmSync
       def is_receiving?
         !is_sending
       end
-      alias_method :is_sending?, :outbound
 
       def lock_connection(&block)
         with_lock(true) &block
@@ -32,6 +38,7 @@ module TmSync
 
     class Connection < ActiveRecord::Base
       include TmSync::Connection
+      include LazyAliasMethod
 
       if respond_to? :attr_accessible
         attr_accessible :connection_state

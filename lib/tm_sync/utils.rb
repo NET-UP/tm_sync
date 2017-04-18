@@ -29,4 +29,22 @@ module TmSync
 
   end
 
+  module LazyAliasMethod
+
+    module ClassMethods
+
+      def lazy_alias_method(new_name, old_name)
+        define_singleton_method new_name do |*args, &block|
+          __send__(old_name, *args, &block)
+        end
+      end
+
+    end
+
+    def self.included(klass)
+      klass.extend ClassMethods
+    end
+
+  end
+
 end
