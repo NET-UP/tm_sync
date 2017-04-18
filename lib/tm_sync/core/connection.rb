@@ -9,15 +9,16 @@ module TmSync
       self.sendable = sendable
     end
 
+    attr_accessor :sendable
+    private :sendable=
+    alias_method :sendable?, :sendable
+    undef_method :sendable
+
     value :INITIALIZED, true
     value :OPEN,        true
     value :BROKEN,      false
     value :CLOSED,      false
 
-    attr_accessor :sendable
-    private :sendable=
-    alias_method :sendable?, :sendable
-    undef_method :sendable
   end
 
   module HalfDuplexConnection
