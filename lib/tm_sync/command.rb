@@ -51,7 +51,7 @@ module TmSync
       end
 
       def create(name, payload=nil)
-        result = @commands[name].new
+        result = (@commands[name] || raise(RuntimeError.new("Can't find command #{name}"))).new
         result.payload = payload if not payload.nil?
         result
       end

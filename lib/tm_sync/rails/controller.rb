@@ -32,7 +32,7 @@ module TmSync
         request = TmSync::Rails::RailsRequest.new(self)
         request.sequence_number = params[:sequence].to_i
         request.token = params[:token]
-        request.command = Command.create(params[:command], params[:payload])
+        request.command = Command.create(params[:command].to_sym, params[:payload])
         request
       end
 
