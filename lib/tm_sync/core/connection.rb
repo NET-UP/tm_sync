@@ -192,6 +192,7 @@ module TmSync
 
     # Make sure the server ensures the response is sent
     ensure
+      Rails.logger.info("LOG 01!")
       response.send!
     end
 
