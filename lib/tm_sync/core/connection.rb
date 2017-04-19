@@ -153,7 +153,13 @@ module TmSync
 
     end
 
-    def receive(request)
+    def receive(request, &block)
+      response = _receive(request, &block)
+      response.send!
+      response
+    end
+
+    def _receive(request)
       response = TmSync::Response.new
       response.request = request
       response.payload = {}
@@ -195,12 +201,6 @@ module TmSync
       end
 
       raise e
-
-    # Make sure the server ensures the response is sent
-    ensure
-      if response.error.nil?
-        response.send!
-      end
     end
 
     def send(command, connection)
