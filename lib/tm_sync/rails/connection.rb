@@ -116,6 +116,11 @@ module TmSync
         self.class._get_defer.(&block)
       end
 
+      def find_connection_by_token(token)
+        return value if (value=super)
+        self.channel_class.where(token: token).where(outbound: true).first
+      end
+
       def create_connection(uri, local_token, remote_token, flags)
         connection = self.class.connection_class.new
         connection.endpoint = uri
