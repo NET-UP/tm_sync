@@ -17,8 +17,10 @@ module TmSync
 
       def value(name, *args, &block)
         val = original_new(*args, &block)
-        def val.name
-          name
+        val.instance_eval do
+          define_method :end do
+            name
+          end
         end
 
         const_set(name, val)
