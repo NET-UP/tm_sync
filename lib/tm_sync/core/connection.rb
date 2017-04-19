@@ -131,6 +131,7 @@ module TmSync
     def datagram_connection
       @datagram_connection ||= DatagramConnection.new(nil)
       @datagram_connection.connection_manager = self
+      @datagram_connection
     end
 
     public
