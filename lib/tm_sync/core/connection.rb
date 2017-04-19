@@ -168,7 +168,6 @@ module TmSync
       begin
         connection.receive(request)
 
-        response.command = request.command
         response.response_code = 200
         yield request, response
 
