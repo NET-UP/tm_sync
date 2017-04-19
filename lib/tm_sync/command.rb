@@ -33,13 +33,10 @@ module TmSync
             end
           end
         end
-      end
-      extend ClassMethods
 
-      def [](name)
-        @commands ||= {}
+        def with_name(name)
+          (@commands ||= {})[name] = self
 
-        @commands[name] = Class.new(Command) do
           define_method :name do
             name
           end
@@ -49,6 +46,7 @@ module TmSync
           end
         end
       end
+      extend ClassMethods
 
       def create(name, payload=nil)
         result = (@commands[name] || raise(RuntimeError.new("Can't find command #{name}"))).new
@@ -66,7 +64,9 @@ module TmSync
 
 
   class Command
-    class Register < Command[:register]
+    class Register < Command
+      with_name :register
+
       payload :url
       payload :client_id => 'client-id'
       payload :auth_token => 'auth-token'
@@ -75,23 +75,32 @@ module TmSync
       payload :flags
     end
 
-    class Notify < Command[:notify]
+    class Notify < Command
+      with_name :notify
       payload :command, :data
     end
 
-    class Push < Command[:push]; end
+    class Push < Command
+      with_name :push
+    end
 
-    class Pull < Command[:pull]
+    class Pull < Command
+      with_name :pull
+
       payload :type
       payload :query
     end
 
-    class Subscribe < Command[:subscribe]
+    class Subscribe < Command
+      with_name :subscribe
+
       payload :pull_query => 'pull-query'
       payload :method
     end
 
-    class Unsubscribe < Command[:unsubscribe]
+    class Unsubscribe < Command
+      with_name :unsubscribe
+
       payload :subscription_id => 'subscription-id'
     end
   end
