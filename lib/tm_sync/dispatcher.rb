@@ -50,7 +50,7 @@ module TmSync
 
     def dispatch(request, response)
       if respond_to? :"handle_#{request.command.name}"
-        send(:"handle_#{request.command.name}")
+        send(:"handle_#{request.command.name}", request, response)
       else
         handle_default(request, response)
       end
