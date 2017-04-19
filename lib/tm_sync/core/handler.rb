@@ -59,7 +59,7 @@ module TmSync
       connection = connection_manager.create_connection(
         request.command.url,
         connection_manager.create_token,
-        request.slave_token,
+        request.command.slave_token,
         flags
       )
 
