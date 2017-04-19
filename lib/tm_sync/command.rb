@@ -49,7 +49,7 @@ module TmSync
       extend ClassMethods
 
       def commands
-        @commands || {}
+        @commands ||= {}
       end
 
       def create(name, payload=nil)
