@@ -55,10 +55,11 @@ module TmSync
       end
 
       flags = request.command.flags & TmSync::SUPPORTED_PROTOCOL_FLAGS
+      token = connection_manager.create_token
 
       connection = connection_manager.create_connection(
         request.command.url,
-        connection_manager.create_token,
+        token,
         request.command.slave_token,
         flags
       )
@@ -68,7 +69,7 @@ module TmSync
       end
 
       response.payload = {
-          'master-token' => connection_manager.create_token,
+          'master-token' => token,
           'version'      => TmSync::PROTOCOL_VERSION,
           'flags'        => flags
       }
