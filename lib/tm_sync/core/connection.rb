@@ -159,7 +159,7 @@ module TmSync
       response.payload = {}
 
       connection = find_connection_by_token request.token
-      response.connection = connection
+      request.connection = connection
 
       if connection.nil?
         response.response_code = 401
