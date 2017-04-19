@@ -127,7 +127,7 @@ module TmSync
       def create_connection(uri, local_token, remote_token, flags)
         connection = self.class.connection_class.new
         connection.endpoint = uri
-        outbound_connection.state = ConnectionState::INITIALIZED
+        connection.state = ConnectionState::INITIALIZED
         connection.save!
 
         outbound_connection = self.class.channel_class.new
