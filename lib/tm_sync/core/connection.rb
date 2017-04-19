@@ -170,7 +170,7 @@ module TmSync
       if connection.nil?
         response.response_code = 401
         response.error = 'Unrecognized token'
-        return
+        return response
       end
 
       begin
@@ -184,6 +184,8 @@ module TmSync
         response.response_code = 504
         response.error = 'Connection broken'
       end
+
+      return response
 
     # Make sure the server responds to ISEs appropriately
     rescue Exception => e
