@@ -54,11 +54,13 @@ module TmSync
         return
       end
 
+      flags = request.command.flags & TmSync::SUPPORTED_PROTOCOL_FLAGS
+
       connection = connection_manager.create_connection(
         request.command.url,
         connection_manager.create_token,
         request.slave_token,
-        []
+        flags
       )
 
       defer do
@@ -68,7 +70,7 @@ module TmSync
       response.payload = {
           'master-token' => connection_manager.create_token,
           'version'      => TmSync::PROTOCOL_VERSION,
-          'flags'        => request.command.flags & TmSync::SUPPORTED_PROTOCOL_FLAGS
+          'flags'        => flags
       }
     end
 
