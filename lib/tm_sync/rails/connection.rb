@@ -119,7 +119,9 @@ module TmSync
       def find_connection_by_token(token)
         value = super
         return value if value
-        self.channel_class.where(token: token).where(outbound: true).first
+        channel = self.class.channel_class.where(token: token).where(outbound: false).first
+        return nil if channel.nil?
+        channel.connection
       end
 
       def create_connection(uri, local_token, remote_token, flags)
