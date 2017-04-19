@@ -45,6 +45,10 @@ module TmSync
       yield
     end
 
+    class Simple
+      include HalfDuplexConnection
+    end
+
   end
 
   module Connection
@@ -67,11 +71,11 @@ module TmSync
     end
 
     def outbound_connection
-      HalfDuplexConnection.new
+      HalfDuplexConnection::Simple.new
     end
 
     def inbound_connection
-      HalfDuplexConnection.new
+      HalfDuplexConnection::Simple.new
     end
 
     def receive(request)
