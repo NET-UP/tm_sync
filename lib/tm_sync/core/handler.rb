@@ -122,7 +122,7 @@ module TmSync
       acknowledge.payload = []
 
       connection.state = new_state
-      connection.defer_send connection, acknowledge
+      defer_send connection, acknowledge
     end
 
   end
