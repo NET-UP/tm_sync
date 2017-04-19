@@ -159,6 +159,8 @@ module TmSync
       response.payload = {}
 
       connection = find_connection_by_token request.token
+      response.connection = connection
+
       if connection.nil?
         response.response_code = 401
         response.error = 'Unrecognized token'
