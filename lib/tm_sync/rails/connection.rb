@@ -52,7 +52,6 @@ module TmSync
                 :conditions => ['channel.outbound', false],
                 :source => :channel
 
-        alias_method :state, :connection_state
       else
         has_one :outbound_connection,
                 ->{where outbound: true},
@@ -62,13 +61,14 @@ module TmSync
                 ->{where outbound: false},
                 :foreign_type => :channel
 
-        lazy_alias_method :state, :connection_state
       end
 
-
+      def state
+        ConnectionState.by_name(self.connection_state)
+      end
 
       def state=(value)
-        self.connection_state = value
+        self.connection_state = value.name
         save!
       end
 

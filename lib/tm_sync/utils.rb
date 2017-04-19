@@ -24,6 +24,10 @@ module TmSync
         const_set(name, val)
       end
 
+      def by_name(name)
+        const_get(name)
+      end
+
 
     end
 
