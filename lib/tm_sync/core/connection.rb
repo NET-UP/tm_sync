@@ -197,8 +197,10 @@ module TmSync
       raise e
 
     # Make sure the server ensures the response is sent
-    else
-      response.send!
+    ensure
+      if response.error.nil?
+        response.send!
+      end
     end
 
     def send(command, connection)
