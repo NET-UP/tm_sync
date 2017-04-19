@@ -136,7 +136,7 @@ module TmSync
         outbound_connection.connection = connection
         outbound_connection.save
 
-        inbound_connection = self.channel_class.new
+        inbound_connection = self.class.channel_class.new
         inbound_connection.token = local_token
         inbound_connection.outbound = false
         inbound_connection.sequence_number = 0
