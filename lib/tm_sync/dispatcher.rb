@@ -49,8 +49,8 @@ module TmSync
     end
 
     def dispatch(request, response)
-      if respond_to? :"handle_#{command.name}"
-        send(:"handle_#{command.name}")
+      if respond_to? :"handle_#{request.command.name}"
+        send(:"handle_#{request.command.name}")
       else
         handle_default(request, response)
       end
@@ -97,7 +97,7 @@ module TmSync
       response.payload = {} if response.payload.nil?
     end
 
-    def handle_default(command, response)
+    def handle_default(request, response)
       response.response_code = 501
       response.error = "Command not implemented"
       response.payload = {}
