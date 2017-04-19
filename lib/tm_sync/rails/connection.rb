@@ -129,7 +129,7 @@ module TmSync
         connection.endpoint = uri
         connection.save
 
-        outbound_connection = self.channel_class.new
+        outbound_connection = self.class.channel_class.new
         outbound_connection.token = remote_token
         outbound_connection.outbound = true
         outbound_connection.sequence_number = 0
