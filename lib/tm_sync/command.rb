@@ -34,8 +34,12 @@ module TmSync
           end
         end
 
+        def commands
+          @commands || {}
+        end
+
         def with_name(name)
-          (@commands ||= {})[name] = self
+          commands[name] = self
 
           define_method :name do
             name
@@ -49,7 +53,7 @@ module TmSync
       extend ClassMethods
 
       def create(name, payload=nil)
-        result = (@commands[name] || raise(RuntimeError.new("Can't find command #{name}"))).new
+        result = (commands[name] || raise(RuntimeError.new("Can't find command #{name}"))).new
         result.payload = payload if not payload.nil?
         result
       end
