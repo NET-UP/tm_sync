@@ -54,8 +54,15 @@ module TmSync
         return
       end
 
+      connection = connection_manager.create_connection(
+        request.command.url,
+        connection_manager.create_token,
+        request.slave_token,
+        []
+      )
+
       defer do
-        send_handshake(ConnectionState::INITIALIZED)
+        send_handshake(ConnectionState::INITIALIZED, connection)
       end
 
       response.payload = {
@@ -103,11 +110,11 @@ module TmSync
         raise ConnectionBrokenException.new
       end
 
-      send_handshake(ConnectionState::OPEN)
+      send_handshake(ConnectionState::OPEN, connection)
       response.payload = {'synced-objects' => 0}
     end
 
-    def send_handshake(new_state)
+    def send_handshake(new_state, connection)
       acknowledge = TmSync::Command::Push.new
       acknowledge.payload = []
 
