@@ -117,7 +117,8 @@ module TmSync
       end
 
       def find_connection_by_token(token)
-        return value if (value=super)
+        value = super
+        return value if value
         self.channel_class.where(token: token).where(outbound: true).first
       end
 
