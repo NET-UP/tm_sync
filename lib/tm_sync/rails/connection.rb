@@ -18,7 +18,7 @@ module TmSync
         lazy_alias_method :is_sending?, :outbound
       end
 
-      has_one :connection
+      belongs_to :connection
 
       def is_receiving?
         !is_sending
