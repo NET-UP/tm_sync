@@ -93,6 +93,7 @@ module TmSync
 
     def defer_send(connection, command)
       defer do
+        Rails.logger.info "TESTIFICATE #{command.inspect}"
         response = connection.send_command(command)
         yield response if block_given?
       end

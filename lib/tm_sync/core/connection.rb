@@ -98,7 +98,6 @@ module TmSync
     end
 
     def send_command(command)
-      Rails.logger.info "TESTIFICATE #{command.inspect}"
       connection_manager.send_command(command, self)
     end
 
