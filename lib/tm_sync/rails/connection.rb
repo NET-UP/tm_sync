@@ -125,26 +125,31 @@ module TmSync
       end
 
       def create_connection(uri, local_token, remote_token, flags)
-        connection = self.class.connection_class.new
-        connection.endpoint = uri
-        connection.state = ConnectionState::INITIALIZED
-        connection.save!
+        self.class.connection_class.transaction do
+          connection = self.class.connection_class.new
+          connection.endpoint = uri
+          connection.state = ConnectionState::INITIALIZED
+          connection.save!
 
-        outbound_connection = self.class.channel_class.new
-        outbound_connection.token = remote_token
-        outbound_connection.outbound = true
-        outbound_connection.sequence_number = 0
-        outbound_connection.connection = connection
-        outbound_connection.save!
+          outbound_connection = self.class.channel_class.new
+          outbound_connection.token = remote_token
+          outbound_connection.outbound = true
+          outbound_connection.sequence_number = 0
+          outbound_connection.connection = connection
+          outbound_connection.save!
 
-        inbound_connection = self.class.channel_class.new
-        inbound_connection.token = local_token
-        inbound_connection.outbound = false
-        inbound_connection.sequence_number = 0
-        inbound_connection.connection = connection
-        inbound_connection.save!
+          inbound_connection = self.class.channel_class.new
+          inbound_connection.token = local_token
+          inbound_connection.outbound = false
+          inbound_connection.sequence_number = 0
+          inbound_connection.connection = connection
+          inbound_connection.save!
 
-        connection
+          ::Rails.logger.info connection.inspect
+
+          connection
+        end
+
       end
     end
 
