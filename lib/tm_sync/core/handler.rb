@@ -93,15 +93,24 @@ module TmSync
 
     def defer_send(connection, command)
       defer do
-        Rails.logger.info "TESTIFICATE #{command.inspect}"
-        Rails.logger.flush
         response = connection.send_command(command)
         yield response if block_given?
       end
     end
 
     def defer(&block)
-      connection_manager.defer(&block)
+      connection_manager.defer do
+        begin
+          block.()
+        rescue Exception => e
+          Rails.logger.error e.inspect
+          e.backtrace.each do |bt|
+            Rails.logger.error bt
+          end
+
+          Rails.logger.flush if Rails.logger.respond_to? :flush
+        end
+      end
     end
 
     private
