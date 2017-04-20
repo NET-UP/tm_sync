@@ -37,7 +37,10 @@ module TmSync
     end
 
     class Connection < ActiveRecord::Base
+      alias_method :original_endpoint, :endpoint
       include TmSync::Connection
+      alias_method :endpoint, :original_endpoint
+
       include LazyAliasMethod
 
       if respond_to? :attr_accessible
