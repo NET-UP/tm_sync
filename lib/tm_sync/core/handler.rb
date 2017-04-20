@@ -64,9 +64,7 @@ module TmSync
         flags
       )
 
-      defer do
-        send_handshake(ConnectionState::INITIALIZED, connection)
-      end
+      send_handshake(ConnectionState::INITIALIZED, connection)
 
       response.payload = {
           'master-token' => token,

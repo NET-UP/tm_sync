@@ -205,7 +205,7 @@ module TmSync
       raise e
     end
 
-    def send(command, connection)
+    def send_command(command, connection)
       request = TmSync::Request.new
       request.command = command
 
