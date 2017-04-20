@@ -8,6 +8,10 @@ module TmSync
       raise RuntimeError.new('No name given')
     end
 
+    def to_h
+      result.payload || {}
+    end
+
     class << self
       module ClassMethods
 
@@ -58,9 +62,6 @@ module TmSync
         result
       end
 
-      def to_h
-        result.payload || {}
-      end
 
       def inherited(klass)
         klass.extend ClassMethods
