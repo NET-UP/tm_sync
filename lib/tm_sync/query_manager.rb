@@ -38,7 +38,7 @@ module TmSync
             mode: :create,
             type: type,
             identifier: result[:identifier],
-            checksum: Digest::SHA2.new(512).hexdigest(data.to_json.encode('utf-8')),
+            checksum: Digest::SHA2.new(512).hexdigest(result.to_json.encode('utf-8')),
             object: result
         }
       end
