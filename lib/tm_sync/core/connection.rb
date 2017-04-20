@@ -93,12 +93,12 @@ module TmSync
 
       outbound_connection.lock_connection do
         request.sequence_number = outbound_connection.increment_sequence_number
-        Rails.logger.info "TESTIFICATE #{request.inspect}"
         request.send!
       end
     end
 
     def send_command(command)
+      Rails.logger.info "TESTIFICATE #{command.inspect}"
       connection_manager.send_command(command, self)
     end
 
