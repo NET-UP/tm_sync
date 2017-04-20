@@ -25,7 +25,7 @@ module TmSync
       end
 
       def lock_connection(&block)
-        with_lock(true) &block
+        with_lock(true, &block)
       end
 
       def increment_sequence_number
@@ -66,13 +66,9 @@ module TmSync
           self[:endpoint]
         end
 
-        def outbound_connection
-          self[:outbound_connection]
-        end
+        # WARNING: BUG. Manually define
+        # outbound_connection and inbound_connection
 
-        def inbound_connection
-          self[:inbound_connection]
-        end
       end
 
       def state
