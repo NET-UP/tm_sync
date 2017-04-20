@@ -9,6 +9,7 @@ module TmSync
     attr_reader :base_uri
 
     def initialize(uri)
+      ::Rails.logger.info(uri)
       @base_uri = URI(uri)
     end
 
