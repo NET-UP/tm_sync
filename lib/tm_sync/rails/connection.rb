@@ -63,7 +63,7 @@ module TmSync
                 :foreign_type => :channel
 
         def endpoint
-          query_attribute(:endpoint)
+          self[:endpoint]
         end
       end
 
