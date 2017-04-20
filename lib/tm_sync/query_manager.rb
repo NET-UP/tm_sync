@@ -42,6 +42,8 @@ module TmSync
             object: result
         }
       end
+
+      result.to_a
     end
 
   end
