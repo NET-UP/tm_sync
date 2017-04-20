@@ -88,7 +88,7 @@ module TmSync
 
     def send_message(request)
       raise ConnectionBrokenException.new if not state.sendable?
-      request.connection = connection
+      request.connection = self
       request.token = outbound_connection.token
 
       outbound_connection.lock_connection do
