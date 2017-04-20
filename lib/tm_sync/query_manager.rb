@@ -24,7 +24,7 @@ module TmSync
     end
 
     def query(command, response)
-      result = @query_types[command.type].(command.query)
+      result = @query_types[command.type.to_sym].(command.query)
       if result.nil?
         return [] if response.nil?
         response.response_code = 415
