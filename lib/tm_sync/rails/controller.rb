@@ -29,10 +29,14 @@ module TmSync
 
       private
       def build_request
+        actual_params = JSON.parse(
+            request.raw_post.encode("utf-8"),
+        ).with_indifferent_access
+
         request = TmSync::Rails::RailsRequest.new(self)
-        request.sequence_number = params[:sequence].to_i
-        request.token = params[:token]
-        request.command = Command.create(params[:command].to_sym, params[:payload])
+        request.sequence_number = actual_params[:sequence].to_i
+        request.token = actual_params[:token]
+        request.command = Command.create(actual_params[:command].to_sym, actual_params[:payload])
         request
       end
 
