@@ -118,6 +118,7 @@ module TmSync
       acknowledge.payload = []
 
       connection.state = new_state
+      ::Rails.logger.info connection
       defer_send connection, acknowledge
     end
 
