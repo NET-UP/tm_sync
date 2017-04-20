@@ -100,17 +100,7 @@ module TmSync
 
     def defer(&block)
       connection_manager.defer do
-        begin
-          Rails.logger.info block.inspect
-          block.()
-        rescue Exception => e
-          Rails.logger.error e.inspect
-          e.backtrace.each do |bt|
-            Rails.logger.error bt
-          end
-
-          Rails.logger.flush if Rails.logger.respond_to? :flush
-        end
+        block.()
       end
     end
 
