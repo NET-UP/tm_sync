@@ -65,6 +65,14 @@ module TmSync
         def endpoint
           self[:endpoint]
         end
+
+        def outbound_connection
+          self[:outbound_connection]
+        end
+
+        def inbound_connection
+          self[:inbound_connection]
+        end
       end
 
       def state
