@@ -21,6 +21,8 @@ module TmSync
     end
 
     def send!
+      ::Rails.logger.info(connection.endpoint)
+      ::Rails.logger.info(connection)
       client = TmSync::HttpClient.new(connection.endpoint)
       raw_response = client.send(self)
       data = JSON.parse(raw_response.read_body)
