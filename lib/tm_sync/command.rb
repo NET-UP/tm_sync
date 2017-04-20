@@ -9,7 +9,7 @@ module TmSync
     end
 
     def to_h
-      result.payload || {}
+      payload || {}
     end
 
     class << self
