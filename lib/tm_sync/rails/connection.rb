@@ -37,9 +37,7 @@ module TmSync
     end
 
     class Connection < ActiveRecord::Base
-      alias_method :original_endpoint, :endpoint
       include TmSync::Connection
-      alias_method :endpoint, :original_endpoint
 
       include LazyAliasMethod
 
@@ -64,6 +62,9 @@ module TmSync
                 ->{where outbound: false},
                 :foreign_type => :channel
 
+        def endpoint
+          query_attribute(:endpoint)
+        end
       end
 
       def state
