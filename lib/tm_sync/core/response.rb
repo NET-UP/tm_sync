@@ -19,7 +19,7 @@ module TmSync
     def to_h
       result = {
           :response_code => response_code,
-          :payload => payload.to_h
+          :payload => payload
       }
 
       result[:error] = error if not error.nil?

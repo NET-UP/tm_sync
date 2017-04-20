@@ -66,7 +66,6 @@ module TmSync
 
     def handle_pull(request, response)
       response.payload = query_manager.query(request.command, response)
-      ::Rails.logger.info response.payload.inspect
     end
 
     def handle_notify(request, response)

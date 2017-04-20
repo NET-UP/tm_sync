@@ -87,10 +87,6 @@ module TmSync
       yield command, response if block_given?
     end
 
-    def send_message(connection, response)
-
-    end
-
     def defer_send(connection, command)
       defer do
         response = connection_manager.send_command(command, connection)
