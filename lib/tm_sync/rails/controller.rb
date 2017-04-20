@@ -30,7 +30,7 @@ module TmSync
       private
       def build_request
         actual_params = JSON.parse(
-            request.raw_post.encode("utf-8"),
+            request.raw_post.force_encoding("utf-8"),
         ).with_indifferent_access
 
         request = TmSync::Rails::RailsRequest.new(self)

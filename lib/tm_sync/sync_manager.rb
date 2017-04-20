@@ -20,7 +20,7 @@ module TmSync
 
         data = object['object']
 
-        if Digest::Sha512.hexdigest(data.to_json.encode('utf-8')) != checksum
+        if Digest::SHA2.new(512).hexdigest(data.to_json.encode('utf-8')) != checksum
           request.response_code = 422
           request.error = 'Checksum mismatch detected'
           request.payload = {type: type, identifier: identifier}
