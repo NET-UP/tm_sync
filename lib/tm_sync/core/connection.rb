@@ -93,7 +93,6 @@ module TmSync
 
       outbound_connection.lock_connection do
         request.sequence_number = outbound_connection.increment_sequence_number
-        ::Rails.logger.info outbound_connection.inspect
         request.send!
       end
     end

@@ -15,6 +15,10 @@ module TmSync
 
         alias_method :is_sending?, :outbound
       else
+        def token
+          self[:token]
+        end
+
         lazy_alias_method :is_sending?, :outbound
       end
 
