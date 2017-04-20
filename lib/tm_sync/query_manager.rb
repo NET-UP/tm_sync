@@ -43,7 +43,6 @@ module TmSync
         }
       end
 
-      result.to_a
     end
 
   end
