@@ -97,10 +97,6 @@ module TmSync
       end
     end
 
-    def send_command(command)
-      connection_manager.send_command(command, self)
-    end
-
     private
     def break!
       self.state=ConnectionState::BROKEN
