@@ -101,6 +101,7 @@ module TmSync
     def defer(&block)
       connection_manager.defer do
         begin
+          Rails.logger.info block.inspect
           block.()
         rescue Exception => e
           Rails.logger.error e.inspect
