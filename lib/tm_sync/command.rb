@@ -58,6 +58,10 @@ module TmSync
         result
       end
 
+      def to_h
+        result.payload || {}
+      end
+
       def inherited(klass)
         klass.extend ClassMethods
       end
