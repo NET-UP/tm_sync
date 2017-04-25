@@ -9,7 +9,7 @@ module TmSync
     end
 
     def synchronize(command, request=nil)
-      request = TmSync::Request.new if request.nil?
+      request = TmSync::Command::Push.new if request.nil?
       synced = 0
 
       command.payload.each do |object|
