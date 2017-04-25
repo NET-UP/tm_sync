@@ -8,7 +8,7 @@ module TmSync
       @types[name] = block
     end
 
-    def synchronize(command, request)
+    def synchronize(command, request=nil)
       request = TmSync::Request.new if request.nil?
       synced = 0
 

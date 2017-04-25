@@ -8,19 +8,11 @@ module TmSync
       include TmSync::HalfDuplexConnection
       include LazyAliasMethod
 
-      if respond_to? :attr_accessible
-        attr_accessible :token
-        attr_accessible :sequence_number
-        attr_accessible :outbound
-
-        alias_method :is_sending?, :outbound
-      else
-        def token
-          self[:token]
-        end
-
-        lazy_alias_method :is_sending?, :outbound
+      def token
+        self[:token]
       end
+
+      lazy_alias_method :is_sending?, :outbound
 
       belongs_to :connection
 
@@ -45,35 +37,20 @@ module TmSync
 
       include LazyAliasMethod
 
-      if respond_to? :attr_accessible
-        attr_accessible :connection_state
-        attr_accessible :endpoint
+      has_one :outbound_connection,
+              ->{where outbound: true},
+              :foreign_type => :channel
 
-        has_one :outbound_connection,
-                :conditions => ['channel.outbound', true],
-                :source => :channel
+      has_one :inbound_connection,
+              ->{where outbound: false},
+              :foreign_type => :channel
 
-        has_one :inbound_connection,
-                :conditions => ['channel.outbound', false],
-                :source => :channel
-
-      else
-        has_one :outbound_connection,
-                ->{where outbound: true},
-                :foreign_type => :channel
-
-        has_one :inbound_connection,
-                ->{where outbound: false},
-                :foreign_type => :channel
-
-        def endpoint
-          self[:endpoint]
-        end
-
-        # WARNING: BUG. Manually define
-        # outbound_connection and inbound_connection
-
+      def endpoint
+        self[:endpoint]
       end
+
+      # WARNING: BUG. Manually define
+      # outbound_connection and inbound_connection
 
       def state
         ConnectionState.by_name(self.connection_state)
@@ -156,8 +133,6 @@ module TmSync
           inbound_connection.sequence_number = 0
           inbound_connection.connection = connection
           inbound_connection.save!
-
-          ::Rails.logger.info connection.inspect
 
           connection
         end
