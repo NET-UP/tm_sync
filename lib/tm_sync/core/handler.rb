@@ -25,7 +25,7 @@ module TmSync
       command.version = TmSync::PROTOCOL_VERSION
       command.flags = TmSync::SUPPORTED_PROTOCOL_FLAGS
 
-      response = conn.send_command(command)
+      response = connection_manager.send_command(command, conn)
       case response.response_code
         when 200
           connection = connection_manager.create_connection(
