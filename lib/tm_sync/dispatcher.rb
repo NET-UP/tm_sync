@@ -10,7 +10,7 @@ module TmSync
 
     def push(connection, objects)
       push = TmSync::Command::Push.new
-      push.payload = object.map &query_manager.method(:convert_obj)
+      push.payload = objects.map &query_manager.method(:convert_obj)
       @handler.send_message(connection, push)
     end
 

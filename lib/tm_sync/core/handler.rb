@@ -73,6 +73,10 @@ module TmSync
       }
     end
 
+    def send_message(connection, command)
+      return connection_manager.send_command(command, connection)
+    end
+
     def receive_message(request, &block)
       connection_manager.receive(request) do |request, response|
         receive(request.command, response, &block)
