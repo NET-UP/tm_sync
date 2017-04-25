@@ -2,14 +2,18 @@ module TmSync
 
   class Command
 
-    attr_accessor :payload
+    attr_writer :payload
+
+    def payload
+      @payload ||= {}
+    end
 
     def name
       raise RuntimeError.new('No name given')
     end
 
     def to_h
-      payload || {}
+      payload
     end
 
     class << self
