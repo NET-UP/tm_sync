@@ -44,6 +44,8 @@ module TmSync
         else
           raise UnexpectedResponseException.new("Unexpected response-code of client: #{response.response_code}")
       end
+
+      connection
     end
 
     def accept(request, response)
