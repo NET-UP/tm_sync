@@ -28,8 +28,8 @@ module TmSync
       response = TmSync::Response.new
       response.response_code = raw_response.code
       response.request = self
-      response.error = data[:error] if data.has_key? :error
-      response.payload = data[:payload]
+      response.error = data['error'] if data.has_key? :error
+      response.payload = data['payload']
       response
     end
 
