@@ -31,8 +31,8 @@ module TmSync
           connection = connection_manager.create_connection(
               remote_url,
               command.slave_token,
-              response[:'master-token'],
-              response[:flags]
+              response['master-token'],
+              response['flags']
           )
           connection.state = ConnectionState::INITIALIZED
         when 401
