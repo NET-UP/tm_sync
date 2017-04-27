@@ -10,7 +10,7 @@ module TmSync
 
     def push(connection, objects)
       push = TmSync::Command::Push.new
-      push.payload = objects.map &query_manager.method(:convert_obj)
+      push.payload = query_manager.dump(objects)
       @handler.send_message(connection, push)
     end
 
@@ -35,6 +35,7 @@ module TmSync
   end
 
   module Dispatcher
+
     def before(&block)
       @before_filters << block
     end
@@ -75,7 +76,7 @@ module TmSync
     def handle_notify(request, response)
       response.payload = nil
 
-      case request.type
+      case request.command.type
         when :register
           handler.defer do
             handler.connect(

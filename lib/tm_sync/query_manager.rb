@@ -23,6 +23,18 @@ module TmSync
       end
     end
 
+    def dump(items)
+      items.map(&method(:convert_obj)).map do |type, result|
+        {
+            mode: :create,
+            type: type,
+            identifier: result[:identifier],
+            checksum: Digest::SHA2.new(512).hexdigest(result.to_json.encode('utf-8')),
+            object: result
+        }
+      end
+    end
+
     def query(command, response)
       result = @query_types[command.type.to_sym].(command.query)
       if result.nil?
@@ -33,16 +45,7 @@ module TmSync
         return
       end
 
-      result.map(&method(:convert_obj)).map do |type, result|
-        {
-            mode: :create,
-            type: type,
-            identifier: result[:identifier],
-            checksum: Digest::SHA2.new(512).hexdigest(result.to_json.encode('utf-8')),
-            object: result
-        }
-      end
-
+      dump(result)
     end
 
   end
