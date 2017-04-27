@@ -88,6 +88,10 @@ module TmSync
       payload :flags
     end
 
+    class Unregister < Command
+      with_name :unregister
+    end
+
     class Notify < Command
       with_name :notify
       payload :command, :data

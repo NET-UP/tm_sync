@@ -97,6 +97,20 @@ module TmSync
       end
     end
 
+    def close!
+      self.state = ConnectionState::CLOSE
+    end
+
+    def close
+      request = TmSync::Request.new
+      request.command = TmSync::Command::Unregister.new
+      begin
+        send_message(request)
+      ensure
+        close!
+      end
+    end
+
     private
     def break!
       self.state=ConnectionState::BROKEN

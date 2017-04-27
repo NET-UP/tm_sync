@@ -28,6 +28,10 @@ module TmSync
       @handler.send_message(connection, notify)
     end
 
+    def close(connection)
+      connection.close
+    end
+
   end
 
   module Dispatcher
@@ -95,6 +99,10 @@ module TmSync
 
       response.state = :accepted
       response.payload = {} if response.payload.nil?
+    end
+
+    def handle_unregister(request, response)
+      request.connection.close!
     end
 
     def handle_default(request, response)
