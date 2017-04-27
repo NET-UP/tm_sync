@@ -48,6 +48,7 @@ module TmSync
       @handler.receive_message(request) do |command, response|
         if command.name != :register and request.connection.datagram?
           ::Rails.logger.info request.connection
+          ::Rails.logger.info command.name
           raise ConnectionBrokenException.new
         end
         @before_filters.each do |filter|
