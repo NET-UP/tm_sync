@@ -46,7 +46,7 @@ module TmSync
 
     def receive(request)
       @handler.receive_message(request) do |command, response|
-        if request.type.to_sym != :register and request.connection.datagram?
+        if command.name.to_sym != :register and request.connection.datagram?
           raise ConnectionBrokenException.new
         end
         @before_filters.each do |filter|
