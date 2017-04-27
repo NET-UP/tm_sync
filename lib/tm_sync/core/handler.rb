@@ -76,7 +76,7 @@ module TmSync
     end
 
     def send_message(connection, command)
-      return connection_manager.send_command(command, connection)
+      connection_manager.send_command(command, connection)
     end
 
     def receive_message(request, &block)
