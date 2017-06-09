@@ -91,10 +91,19 @@ module TmSync
       request.connection = self
       request.token = outbound_connection.token
 
+      err = nil
+
       outbound_connection.lock_connection do
         request.sequence_number = outbound_connection.increment_sequence_number
-        request.send!
+        begin
+          request.send!
+        rescue => e
+          err = e
+          break_silently
+        end
       end
+
+      raise err if err
     end
 
     def close!
@@ -113,8 +122,12 @@ module TmSync
 
     private
     def break!
-      self.state=ConnectionState::BROKEN
+      break_silently
       raise ConnectionBrokenException.new
+    end
+
+    def break_silently
+      self.state=ConnectionState::BROKEN
     end
   end
 
