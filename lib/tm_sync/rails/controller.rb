@@ -7,7 +7,12 @@ module TmSync
 
       def self.request_handler(name)
         define_method name do
-          client.receive(build_request)
+          begin
+            client.receive(build_request)
+          rescue => e
+            Rails.logger.error "#{e.class.to_s}: #{e.to_s}"
+            e.backtrace.each {|line| Rails.logger.error line}
+          end
         end
       end
 
