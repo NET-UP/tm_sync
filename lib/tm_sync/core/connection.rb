@@ -92,11 +92,12 @@ module TmSync
       request.token = outbound_connection.token
 
       err = nil
+      response = nil
 
       outbound_connection.lock_connection do
         request.sequence_number = outbound_connection.increment_sequence_number
         begin
-          return request.send!
+          response = request.send!
         rescue => e
           err = e
           break_silently
@@ -104,6 +105,9 @@ module TmSync
       end
 
       raise err if err
+      if response.response_code == 504
+        break!
+      end
     end
 
     def close!
