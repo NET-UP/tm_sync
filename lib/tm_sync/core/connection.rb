@@ -105,7 +105,7 @@ module TmSync
       end
 
       raise err if err
-      if response.response_code == 504
+      if response.response_code == "504"
         break!
       end
       return response
