@@ -29,12 +29,12 @@ module TmSync
       request['content-type'] = 'application/json; charset=utf-8'
       request.body = command.to_json.encode('utf-8')
 
-      Rails.logger.info(request.inspect)
+      ::Rails.logger.info(request.inspect)
       response = http_client.request(request)
       if response.is_a? Net::HTTPRedirection
         return redirect(command, response, limit-1)
       end
-      Rails.logger.info(response.inspect)
+      ::Rails.logger.info(response.inspect)
       response
     end
 
