@@ -14,7 +14,7 @@ module TmSync
 
       def respond!(response)
         controller.render :json => response,
-                          :code => response.response_code
+                          :status => response.response_code
       end
 
     end
