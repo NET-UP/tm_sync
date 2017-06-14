@@ -107,7 +107,7 @@ module TmSync
     end
 
     def close!
-      self.state = ConnectionState::CLOSE
+      self.state = ConnectionState::CLOSED
     end
 
     def close
