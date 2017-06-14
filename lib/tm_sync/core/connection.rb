@@ -96,7 +96,7 @@ module TmSync
       outbound_connection.lock_connection do
         request.sequence_number = outbound_connection.increment_sequence_number
         begin
-          request.send!
+          return request.send!
         rescue => e
           err = e
           break_silently
