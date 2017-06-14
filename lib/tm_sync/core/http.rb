@@ -24,16 +24,17 @@ module TmSync
     def send!(location, command, limit=10)
       raise RuntimeError.new('Too many redirects') if limit <= 0
       location = URI(location) if location.is_a? String
-      puts(location)
 
       request = Net::HTTP::Post.new(location)
       request['content-type'] = 'application/json; charset=utf-8'
       request.body = command.to_json.encode('utf-8')
 
+      Rails.logger.info(request.inspect)
       response = http_client.request(request)
       if response.is_a? Net::HTTPRedirection
         return redirect(command, response, limit-1)
       end
+      Rails.logger.info(response.inspect)
       response
     end
 
