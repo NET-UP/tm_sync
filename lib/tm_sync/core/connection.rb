@@ -108,6 +108,7 @@ module TmSync
       if response.response_code == 504
         break!
       end
+      return response
     end
 
     def close!
