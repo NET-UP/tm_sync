@@ -13,7 +13,7 @@ module TmSync
       end
 
       def respond!(response)
-        ::Rails.logger.info response.inspect
+        ::Rails.logger.info response.to_json
         controller.render :json => response,
                           :status => response.response_code
       end
