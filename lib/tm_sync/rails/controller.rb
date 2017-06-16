@@ -11,7 +11,7 @@ module TmSync
             client.receive(build_request)
           rescue => e
             ::Rails.logger.error "#{e.class.to_s}: #{e.to_s}"
-            e.backtrace.each {|line| Rails.logger.error line}
+            e.backtrace.each {|line| ::Rails.logger.error line}
             render :test => "Something went wrong.", :layout => false, :status => 500
           end
         end
