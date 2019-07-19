@@ -71,6 +71,7 @@ module TmSync
           http_client = Net::HTTP.new(
             base_uri.host, base_uri.port
           )
+          http_client.read_timeout = 600
           http_client.use_ssl = true if base_uri.scheme == 'https'
           http_client.start
           @clients[key] = http_client
