@@ -37,7 +37,7 @@ module TmSync
 
       include LazyAliasMethod
 
-      if Rails.version > "6"
+      if ::Rails.version > "6"
         has_one :outbound_connection,
                 ->{where outbound: true},
                 as: :channel
