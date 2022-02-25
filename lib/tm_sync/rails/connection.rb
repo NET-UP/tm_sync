@@ -37,13 +37,23 @@ module TmSync
 
       include LazyAliasMethod
 
-      has_one :outbound_connection,
-              ->{where outbound: true},
-              :foreign_type => :channel
+      if Rails.version > "6"
+        has_one :outbound_connection,
+                ->{where outbound: true},
+                as: :channel
 
-      has_one :inbound_connection,
-              ->{where outbound: false},
-              :foreign_type => :channel
+        has_one :inbound_connection,
+                ->{where outbound: false},
+                as: :channel
+      else
+        has_one :outbound_connection,
+                ->{where outbound: true},
+                :foreign_type => :channel
+
+        has_one :inbound_connection,
+                ->{where outbound: false},
+                :foreign_type => :channel
+      end
 
       def endpoint
         self[:endpoint]
